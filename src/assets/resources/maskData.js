@@ -276,6 +276,10 @@ export const data = [
     "file": "março-on-fire-restaurantes-story.png"
   },
   {
+    "circle": true,
+    "file": "mascara verde.png"
+  },
+  {
     "mask": 1,
     "width": 1000,
     "height": 1000,
