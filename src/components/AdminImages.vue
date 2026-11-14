@@ -161,7 +161,7 @@ finishSelection (event) {
   }
 
   this.message = ''
-}
+},
       async fileBase64 (file) {
       const bytes = new Uint8Array(await file.arrayBuffer())
       let binary = ''
