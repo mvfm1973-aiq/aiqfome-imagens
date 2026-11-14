@@ -30,20 +30,49 @@ export default {
   data: () => ({token:'',name:'',original:null,mask:null,files:[],search:'',busy:false,message:'',error:false}),
   computed: {filtered(){return this.files.filter(f=>f.name.toLowerCase().includes(this.search.toLowerCase()))}},
   methods: {
-    async request(path, method='GET', body){
-      if(!this.token) throw Error('Informe o token de acesso.')
-      const res=await fetch(base+path,{method,headers:{Authorization:`Bearer ${this.token}`,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})})
-      if(!res.ok){let infif (!res.ok) {
-  let info = {}
+    
+    async request(path, method = 'GET', body) {
+      if (!this.token) {
+        throw Error('Informe o token de acesso.')
+      }
 
-  try {
-    info = await res.json()
-  } catch (e) {
-    info = { message: 'Erro ao consultar GitHub' }
-  }
+      const headers = {
+        Authorization: `Bearer ${this.token}`,
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
 
-  throw Error(info.message || `GitHub: erro ${res.status}`)
-}
+      if (body) {
+        headers['Content-Type'] = 'application/json'
+      }
+
+      const options = {
+        method,
+        headers
+      }
+
+      if (body) {
+        options.body = JSON.stringify(body)
+      }
+
+      const res = await fetch(base + path, options)
+
+      if (!res.ok) {
+        let info = {}
+
+        try {
+          info = await res.json()
+        } catch (e) {
+          info = {
+            message: 'Erro ao consultar GitHub'
+          }
+        }
+
+        throw Error(
+          info.message || `GitHub: erro ${res.status}`
+        )
+      }
+
       return res.json()
     },
     async perform(fn){this.busy=true;this.message='';try{await fn();this.error=false}catch(e){this.error=true;this.message=e.message}finally{this.busy=false}},
