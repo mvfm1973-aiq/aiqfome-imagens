@@ -162,12 +162,7 @@ finishSelection (event) {
 
   this.message = ''
 }
-      if (!this.dragging) return
-      this.moveSelection(event)
-      this.dragging = false
-      if (this.selection && (this.selection.w < 2 || this.selection.h < 2)) this.selection = null
-    },
-    async fileBase64 (file) {
+      async fileBase64 (file) {
       const bytes = new Uint8Array(await file.arrayBuffer())
       let binary = ''
       for (let i = 0; i < bytes.length; i += 8192) binary += String.fromCharCode(...bytes.subarray(i, i + 8192))
