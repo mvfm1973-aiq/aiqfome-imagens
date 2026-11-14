@@ -139,7 +139,29 @@ export default {
         w: Math.abs(p.x - this.anchor.x), h: Math.abs(p.y - this.anchor.y)
       }
     },
-    finishSelection (event) {
+   
+finishSelection (event) {
+  if (!this.dragging) return
+
+  this.moveSelection(event)
+  this.dragging = false
+
+  const preview = this.$refs.preview
+  if (preview && preview.hasPointerCapture(event.pointerId)) {
+    preview.releasePointerCapture(event.pointerId)
+  }
+
+  if (!this.selection ||
+      this.selection.w < 2 ||
+      this.selection.h < 2) {
+    this.selection = null
+    this.message = 'Seleção inválida. Arraste na diagonal para marcar a área.'
+    this.error = true
+    return
+  }
+
+  this.message = ''
+}
       if (!this.dragging) return
       this.moveSelection(event)
       this.dragging = false
