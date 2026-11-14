@@ -33,7 +33,7 @@ export default {
     async request(path, method='GET', body){
       if(!this.token) throw Error('Informe o token de acesso.')
       const res=await fetch(base+path,{method,headers:{Authorization:`Bearer ${this.token}`,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})})
-      if(!res.ok){let info={};try{info=await res.json()}catch(e){};throw Error(info.message || `GitHub: erro ${res.status}`)}
+      if(!res.ok){let info={};try{info=await res.json()}catch(e){info={message:'Erro ao consultar GitHub'}}throw Error(info.message || `GitHub: erro ${res.status}`)}
       return res.json()
     },
     async perform(fn){this.busy=true;this.message='';try{await fn();this.error=false}catch(e){this.error=true;this.message=e.message}finally{this.busy=false}},
