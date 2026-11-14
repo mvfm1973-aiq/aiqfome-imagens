@@ -305,6 +305,17 @@ export const data = [
     "mask": 1,
     "width": 1080,
     "height": 1920,
+    "maskW": 267,
+    "maskH": 267,
+    "maskX": 120,
+    "maskY": 815,
+    "circle": false,
+    "file": "teste-versao-2.png"
+  },
+  {
+    "mask": 1,
+    "width": 1080,
+    "height": 1920,
     "maskW": 226,
     "maskH": 225,
     "maskX": 170,
